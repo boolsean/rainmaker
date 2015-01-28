@@ -1,3 +1,11 @@
+"""
+QuandlDataSource.py
+    Defines a driver that interfaces with the quandl website to download
+    EOD stock data.  It returns a set of pandas dataframe objects as its results
+    If user has a quandl token defined as an environment variable, it will submit
+    this key to quandl
+"""
+
 import Quandl
 import os
 
