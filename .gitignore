@@ -53,7 +53,10 @@ docs/_build/
 # PyBuilder
 target/
 
-*.pyc
 *.un~
+*.pyc
 *.swp
+*.swo
 *.p
+*.a
+*.so
