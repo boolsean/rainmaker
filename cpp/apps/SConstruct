@@ -7,4 +7,4 @@ env.Append(LIBPATH=['../data', '../risk'])
 env.Append(CPPPATH=['../data', '../risk'])
 env.Append(LIBS=['data', 'risk'])
 
-env.Program(target='test_addPositions', source=['test_addPositions.cpp'])
+env.Program(target='bin/test_addPositions', source=['test_addPositions.cpp'])

@@ -23,6 +23,28 @@ void Portfolio::printHistory() const {
     std::cout << "pnl:" << getPnl() << std::endl;
 }
 
+void Portfolio::printLineByLineSummary() const {
+    std::cout << "*********** Portfolio.printLineByLineSummary ***********" << std::endl;
+    double pnl = .0;
+    long tradedQty = 0;
+    for(std::list<kg::data::Position>::const_iterator it = _positions.begin();
+            it != _positions.end(); it++) {
+        const kg::data::Position& p = *it;
+        tradedQty += p.getQuantity();
+        if (p.getSide() == 'S') {
+            pnl += (p.getPrice()*p.getQuantity());
+        }
+        else {
+            pnl -= (p.getPrice()*p.getQuantity());
+        }
+        std::cout << p.getSymbol() << "|" << p.getSide() << "|" << p.getQuantity()
+            << "|" << p.getPrice() << std::endl;
+
+    }
+    std::cout << "total traded qty : " << tradedQty
+        << "\ntotal pnl : "<< pnl << std::endl;
+}
+
 double Portfolio::getPnl() const {
     double pnl = .0;
     for(std::list<kg::data::Position>::const_iterator it = _positions.begin();

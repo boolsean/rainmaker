@@ -11,7 +11,10 @@ public:
     Portfolio();
 
     void addPosition(const kg::data::Position& pos);
+
+    // define print methods
     void printHistory() const;
+    void printLineByLineSummary() const;
 
 protected:
     double getPnl() const;
