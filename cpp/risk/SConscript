@@ -1,0 +1,6 @@
+env = Environment()
+env.Append(CPPPATH=['../data'])
+
+sources = ['portfolio.cpp']
+
+env.StaticLibrary('risk', sources)

@@ -1,0 +1,6 @@
+env = Environment()
+
+sources = ['position.cpp']
+
+
+env.StaticLibrary('data', sources)
