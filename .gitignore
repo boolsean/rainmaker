@@ -62,5 +62,6 @@ target/
 *.so
 *.dblite
 *.o
+*.diff
 
 bin/
