@@ -60,3 +60,7 @@ target/
 *.p
 *.a
 *.so
+*.dblite
+*.o
+
+bin/
