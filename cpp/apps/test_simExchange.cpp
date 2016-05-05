@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "logger.h"
 #include "exchorder.h"
 #include "iexchangeclient.h"
@@ -22,8 +23,6 @@ protected:
 
 
 private:
-
-
 };
 
 
@@ -31,8 +30,26 @@ int main() {
 
     kg::trading::IExchange* exchange = new kg::trading::SimExchange();
 
+    kg::trading::IExchangeClient* client = new TestExchangeClient();
+
     exchange->init();
     exchange->start();
+    exchange->addExchangeClient(client);
+
+    std::shared_ptr<kg::trading::ExchOrder> first(new kg::trading::ExchOrder());
+
+    kg::trading::ExchOrder* firstOrder = new kg::trading::ExchOrder();
+    firstOrder->_id = 232881;
+    firstOrder->_action = kg::trading::ExchOrder::NEW;
+    firstOrder->_quantity = 10;
+    firstOrder->_price = 100.10;
+    firstOrder->_side = 'B';
+    firstOrder->_symbol = "AAPL";
+    exchange->sendOrder(firstOrder);
+
+    firstOrder->_id++;
+    exchange->sendOrder(firstOrder);
+    boost::this_thread::sleep_for(boost::chrono::seconds(10));
 
     return 0;
 }

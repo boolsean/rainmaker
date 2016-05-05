@@ -35,13 +35,13 @@ private:
 
 #define LOG_INFO(x)     do {                    \
     std::stringstream os;                       \
-    os << "[INFO ] " << x << std::endl;         \
+    os << "[INFO ]["<< __func__ << "] " << x << std::endl;         \
     kg::util::Logger::onLog(os.str().c_str());  \
     } while (false);
 
 #define LOG_ERROR(x)     do {                   \
     std::stringstream os;                       \
-    os << "[ERROR] " << x << std::endl;         \
+    os << "[ERROR][" << __func__ << "] " << x << std::endl;         \
     kg::util::Logger::onLog(os.str().c_str());  \
     } while (false);
 

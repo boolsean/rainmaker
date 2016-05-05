@@ -1,8 +1,8 @@
 #include "simexchange.h"
 #include "logger.h"
 
-
 #include <boost/thread/thread.hpp>
+
 
 namespace kg {
 namespace trading {
@@ -11,14 +11,23 @@ namespace trading {
 SimExchange::SimExchange()
     :   _client(nullptr),
         _stopRequested(false),
-        _orders()
+        _orders(),
+        _orderThread(nullptr)
 {}
+
+SimExchange::~SimExchange() {
+    if(_orderThread)
+        delete _orderThread;
+}
 
 bool SimExchange::init() {
     return true;
 }
 
 bool SimExchange::start() {
+    LOG_INFO("invoked... creating order thread");
+    _orderThread = new boost::thread(boost::bind(&SimExchange::run, this));
+    _orderThread->detach();
     return true;
 }
 
@@ -70,21 +79,29 @@ void SimExchange::run() {
                 LOG_ERROR("run failed to get an order from order queue");
                 continue;
             }
+            else {
+                LOG_INFO("found order with id:" << order->_id);
+            }
 
             ExchOrderUpdate* update = getOrderFilledUpdate(order);
 
             if(update) {
                 LOG_INFO("sending update to client");
-                _client->onExchangeUpdate(update);
+                if(_client)
+                    _client->onExchangeUpdate(update);
+                else {
+                    LOG_ERROR("no client set");
+                }
 
                 delete update;
             }
         }
         else {
-            boost::this_thread::sleep_for(boost::chrono::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(5));
         }
 
         if (_stopRequested) {
+            LOG_INFO("stop requested");
             break;
         }
     }
