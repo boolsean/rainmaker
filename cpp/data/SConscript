@@ -1,6 +1,7 @@
 env = Environment()
 
-sources = ['position.cpp']
+srcs = [    'position.cpp',
+            'order.cpp']
 
 
-env.StaticLibrary('data', sources)
+env.StaticLibrary('data', srcs)

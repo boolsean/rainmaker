@@ -1,4 +1,5 @@
 env = Environment()
+env.Append(CPPPATH=['../util'])
 env.Append(CPPPATH=['../data'])
 
 sources = ['portfolio.cpp']

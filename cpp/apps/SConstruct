@@ -1,10 +1,29 @@
 env = Environment()
 
+env.Append(CCFLAGS=['-std=c++0x'])
+
+SConscript('../util/SConscript')
 SConscript('../data/SConscript')
 SConscript('../risk/SConscript')
+SConscript('../trading/SConscript')
 
-env.Append(LIBPATH=['../data', '../risk'])
-env.Append(CPPPATH=['../data', '../risk'])
-env.Append(LIBS=['data', 'risk'])
+
+
+env.Append(CPPPATH=['/usr/local/include'])
+env.Append(CPPPATH=['../util', '../data', '../risk', '../trading'])
+
+env.Append(LIBPATH=['../util', '../data', '../risk', '../trading'])
+
+env.Append(LIBS=['util', 'data', 'risk', 'trading'])
+
+env.Append(LIBPATH=['/usr/local/lib'])
+env.Append(LIBS=['boost_thread-mt', 'boost_system'])
 
 env.Program(target='bin/test_addPositions', source=['test_addPositions.cpp'])
+
+env.Program(target='bin/test_linkedq', source=['test_linkedq.cpp'])
+
+env.Program(target='bin/test_threads', source=['test_threads.cpp'])
+
+env.Program(target='bin/test_simExchange', source=['test_simExchange.cpp'])
+

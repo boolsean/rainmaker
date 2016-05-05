@@ -1,4 +1,5 @@
 #include "portfolio.h"
+#include "logger.h"
 
 #include <iostream>
 
@@ -15,7 +16,7 @@ void Portfolio::addPosition(const kg::data::Position& pos) {
 }
 
 void Portfolio::printHistory() const {
-    std::cout << "Portfolio.printHistory IMPLEMENT ME" << std::endl;
+    LOG_INFO("Portfolio.printHistory IMPLEMENT ME");
     for(std::list<kg::data::Position>::const_iterator it = _positions.begin();
             it != _positions.end(); ++it) {
         std::cout << *it << std::endl;
@@ -24,7 +25,7 @@ void Portfolio::printHistory() const {
 }
 
 void Portfolio::printLineByLineSummary() const {
-    std::cout << "*********** Portfolio.printLineByLineSummary ***********" << std::endl;
+    LOG_INFO("*********** Portfolio.printLineByLineSummary ***********");
     double pnl = .0;
     long tradedQty = 0;
     for(std::list<kg::data::Position>::const_iterator it = _positions.begin();
@@ -41,8 +42,8 @@ void Portfolio::printLineByLineSummary() const {
             << "|" << p.getPrice() << std::endl;
 
     }
-    std::cout << "total traded qty : " << tradedQty
-        << "\ntotal pnl : "<< pnl << std::endl;
+
+    LOG_INFO("total traded qty : " << tradedQty << " total pnl : "<< pnl);
 }
 
 double Portfolio::getPnl() const {
