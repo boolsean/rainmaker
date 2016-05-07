@@ -7,6 +7,6 @@ env.Append(CPPPATH=['/usr/local/include'])
 env.Append(CPPPATH=['../util'])
 env.Append(CPPPATH=['../data'])
 
-srcs = ['simexchange.cpp']
+srcs = ['exchorder.cpp', 'simexchange.cpp']
 
 env.StaticLibrary('trading', srcs)

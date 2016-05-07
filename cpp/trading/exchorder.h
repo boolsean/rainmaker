@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 
 namespace kg {
 namespace trading {
@@ -22,6 +23,20 @@ public:
         :   _id(id), _action(action), _quantity(qty), _price(px), _side(side), _symbol(symbol)
     {}
 
+    void setId(unsigned id)         { _id = id; }
+    void setAction(Action action)   { _action = action; }
+    void setQuantity(unsigned qty)  { _quantity = qty; }
+    void setPrice(double px)        { _price = px; }
+    void setSide(char side)         { _side = side; }
+    void setSymbol(const std::string& symbol)   { _symbol = symbol; }
+
+    unsigned getId() const          { return _id; }
+    Action getAction() const        { return _action; }
+    unsigned getQuantity() const    { return _quantity; }
+    double getPrice() const         { return _price; }
+    char getSide() const            { return _side; }
+    const char* getSymbol() const   { return _symbol.c_str(); }
+
     unsigned        _id;
     Action          _action;
     unsigned        _quantity;
@@ -32,6 +47,8 @@ public:
 private:
 
 };
+
+std::ostream& operator<<(std::ostream& os, const ExchOrder& o);
 
 class ExchOrderUpdate {
 public:
@@ -47,11 +64,23 @@ public:
     {}
 
     ExchOrderUpdate(unsigned id, UpdateType updateType, unsigned qty,
-            double px, const std::string& symbol)
+            double px, const std::string& reason)
         :   _id(id), _updateType(updateType), _quantity(qty), _price(px)
     {
-        strncpy(_reason, symbol.c_str(), sizeof(_reason));
+        strncpy(_reason, reason.c_str(), sizeof(_reason));
     }
+
+    void setId(unsigned id) { _id = id; }
+    void setUpdateType(UpdateType updateType) { _updateType = updateType; }
+    void setQuantity(unsigned qty) { _quantity = qty; }
+    void setPrice(double px) { _price = px; }
+    void setReason(const std::string& reason) { strncpy(_reason, reason.c_str(), reason.size()); }
+
+    unsigned getId() const { return _id; }
+    UpdateType getUpdateType() const { return _updateType; }
+    unsigned getQuantity() const { return _quantity; }
+    double getPrice() const { return _price; }
+    const char* getReason() const { return _reason; }
 
     unsigned    _id;
     UpdateType  _updateType;
@@ -59,6 +88,8 @@ public:
     double      _price;
     char        _reason[64];
 };
+
+std::ostream& operator<<(std::ostream& os, const ExchOrderUpdate& u);
 
 }
 }
